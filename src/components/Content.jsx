@@ -4,7 +4,7 @@ import Run from "./Run";
 const Content = () => {
   return (
     <div>
-      <div className="bg-slate-200 mx-10 my-12 h-[500px] drop-shadow-xl rounded-xl flex-col overflow-auto">
+      <div className="flex-col">
         <Run />
         <Run />
         <Run />

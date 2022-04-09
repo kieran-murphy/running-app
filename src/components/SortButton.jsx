@@ -11,7 +11,7 @@ const SortButton = ({ sort, setSort }) => {
 
   return (
     <div
-      className="bg-cyan-300 mx-10 mt-10 h-16 drop-shadow-xl rounded-xl"
+      className="bg-indigo-400 mx-10 mt-10 mb-14 h-16 drop-shadow-xl rounded-xl"
       onClick={() => {
         setSort(handleSort());
       }}

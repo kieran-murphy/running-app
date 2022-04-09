@@ -6,7 +6,7 @@ const CloseAddButton = ({ setLayout }) => {
       onClick={() => {
         setLayout("home");
       }}
-      className="bg-red-300 mx-10 mt-10 h-16 drop-shadow-xl rounded-xl"
+      className="bg-orange-400 mx-10 mt-10 h-16 drop-shadow-xl rounded-xl"
     >
       <h2 className="text-center pt-4 text-white text-xl">Back</h2>
     </div>
