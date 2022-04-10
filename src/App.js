@@ -17,7 +17,7 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <RunForm />
+          <RunForm setLayout={setLayout} />
         </div>
       );
     default:
