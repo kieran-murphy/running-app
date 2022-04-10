@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import StartButton from "./StartButton";
 import StopButton from "./StopButton";
-import { useStopwatch } from "react-timer-hook";
+import { useStopwatch, useTime } from "react-timer-hook";
 
-const RunForm = ({ setLayout }) => {
-  const { seconds, minutes, hours, isRunning, start, pause, reset } =
-    useStopwatch({ autoStart: false });
+const RunForm = ({ setLayout, times, setTimes }) => {
+  const { seconds, minutes, isRunning, start, pause, reset } = useStopwatch({
+    autoStart: false,
+  });
+
+  const { ampm } = useTime({ format: "12-hour" });
   const [shoe, setShoe] = useState("Nike Pegasus 36");
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
@@ -60,7 +63,18 @@ const RunForm = ({ setLayout }) => {
       <div
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"
         onClick={() => {
-          console.log({ displayTime: `${minutes}:${seconds}`, shoes: shoe });
+          const d = new Date();
+          setTimes((prevArray) => [
+            ...prevArray,
+            {
+              displayTime: `${minutes}:${seconds}`,
+              realTime: d.getTime(),
+              date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
+              shoes: shoe,
+              night: ampm,
+            },
+          ]);
+
           setLayout("home");
         }}
       >

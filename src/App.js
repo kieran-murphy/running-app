@@ -10,6 +10,7 @@ import RunForm from "./components/RunForm";
 function App() {
   const [layout, setLayout] = useState("home");
   const [sort, setSort] = useState("date");
+  const [times, setTimes] = useState([]);
 
   switch (layout) {
     case "add":
@@ -17,7 +18,7 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <RunForm setLayout={setLayout} />
+          <RunForm setLayout={setLayout} setTimes={setTimes} times={times} />
         </div>
       );
     default:
@@ -28,7 +29,7 @@ function App() {
           <AddButton setLayout={setLayout} />
 
           <SortButton sort={sort} setSort={setSort} />
-          <Content />
+          <Content times={times} />
         </div>
       );
   }

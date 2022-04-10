@@ -1,22 +1,13 @@
 import React from "react";
 import Run from "./Run";
 
-const Content = () => {
+const Content = ({ times }) => {
   return (
     <div>
       <div className="flex-col">
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
-        <Run />
+        {times.map((time) => (
+          <Run key={time.realTime} time={time} />
+        ))}
       </div>
     </div>
   );
