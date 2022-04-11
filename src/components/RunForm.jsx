@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import StartButton from "./StartButton";
 import StopButton from "./StopButton";
 import { useStopwatch, useTime } from "react-timer-hook";
+// import { weather } from "weather-js";
 
 const RunForm = ({ setLayout, times, setTimes }) => {
-  const { seconds, minutes, isRunning, start, pause, reset } = useStopwatch({
+  const { seconds, minutes, isRunning, start, pause } = useStopwatch({
     autoStart: false,
   });
 
