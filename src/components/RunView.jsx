@@ -23,6 +23,11 @@ const RunView = ({ currentRun }) => {
           👟 {currentRun.shoes}
         </h2>
       </div>
+      <div className="bg-slate-100 mx-10 mt-10 h-16 drop-shadow-xl rounded-xl">
+        <h2 className="text-center pt-4 text-slate-800 text-xl">
+          localtime: {currentRun.localTime}
+        </h2>
+      </div>
     </>
   );
 };

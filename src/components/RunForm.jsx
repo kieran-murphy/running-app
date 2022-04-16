@@ -9,7 +9,14 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     autoStart: false,
   });
 
-  const { ampm } = useTime({ format: "12-hour" });
+  const {
+    seconds: timeSeconds,
+    minutes: timeMinutes,
+    hours: timeHours,
+    ampm,
+  } = useTime({ format: '12-hour'});
+
+
   const [shoe, setShoe] = useState("Nike Pegasus 36");
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
@@ -69,6 +76,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
             ...prevArray,
             {
               displayTime: `${minutes}:${seconds}`,
+              localTime: `${timeHours}:${timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`} ${ampm}`,
               realTime: d.getTime(),
               date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
               shoes: shoe,
