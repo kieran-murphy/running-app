@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StartButton from "./StartButton";
 import StopButton from "./StopButton";
 import { useStopwatch, useTime } from "react-timer-hook";
+const axios = require('axios').default;
+
 // import { weather } from "weather-js";
 
 const RunForm = ({ setLayout, times, setTimes }) => {
@@ -16,11 +18,51 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     ampm,
   } = useTime({ format: '12-hour'});
 
-
   const [shoe, setShoe] = useState("Nike Pegasus 36");
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
+  const [temp, setTemp] = useState(0);
+  const [conditions, setConditions] = useState(0);
+
+  // useEffect(() => {
+  //   const res = await axios.get('https://api.open-meteo.com/v1/forecast?latitude=-28.0167&longitude=153.4000&daily=weathercode,temperature_2m_max&timezone=Australia%2FSydney')
+  //           .then(function (response) {
+  //             // handle success
+  //             console.log(response);
+  //             const res = response.data;
+  //             console.log(res.daily.temperature_2m_max[0])
+  //             console.log(res.daily.weathercode[0])
+              
+  //             console.log(temp);
+              
+  //             useEffect(() => { setConditions(res.daily.weathercode[0]), setTemp(res.daily.temperature_2m_max[0]) }, [])
+  //             console.log(conditions)
+              
+  //           })
+  //           .catch(function (error) {
+  //             // handle error
+  //             console.log(error);
+  //           });
+  // }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      const response = await axios.get("https://api.open-meteo.com/v1/forecast?latitude=-28.0167&longitude=153.4000&daily=weathercode,temperature_2m_max&timezone=Australia%2FSydney");
+      const res = response.data;
+      
+      setConditions(res.daily.weathercode[0])
+      setTemp(res.daily.temperature_2m_max[0])
+      
+      
+    };
+
+    fetchData();
+    
+  }, []);
+
+
 
   const calculateTime = () => {
     setTotalTime((endTime - startTime) / 1000);
@@ -72,6 +114,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"
         onClick={() => {
           const d = new Date();
+          
           setTimes((prevArray) => [
             ...prevArray,
             {
@@ -81,6 +124,8 @@ const RunForm = ({ setLayout, times, setTimes }) => {
               date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
               shoes: shoe,
               night: ampm,
+              Temperature: temp,
+              Conditions: conditions,
             },
           ]);
 
