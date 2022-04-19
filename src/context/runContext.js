@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 
 export const RunListContext = createContext();
-const defaultRuns = [];
+const defaultRuns = [
+  "0:0_9:39 pm_1650281963679_18/3/2022_Nike Pegasus 36_pm_0_Clear ☀️",
+];
 
 export const RunContextProvider = (props) => {
   const loading = () => {

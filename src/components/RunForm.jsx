@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import StartButton from "./StartButton";
 import StopButton from "./StopButton";
 import { useStopwatch, useTime } from "react-timer-hook";
 import weather from "../data/weather";
+import { RunListContext } from "../context/runContext";
 const axios = require("axios").default;
 
 // import { weather } from "weather-js";
@@ -24,6 +25,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
   const [totalTime, setTotalTime] = useState(0);
   const [temp, setTemp] = useState(0);
   const [conditions, setConditions] = useState(0);
+  const { addRun } = useContext(RunListContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +40,11 @@ const RunForm = ({ setLayout, times, setTimes }) => {
 
     fetchData();
   }, []);
+
+  const handleClick = (run) => {
+    addRun(run);
+    setLayout("home");
+  };
 
   const calculateTime = () => {
     setTotalTime((endTime - startTime) / 1000);
@@ -106,7 +113,13 @@ const RunForm = ({ setLayout, times, setTimes }) => {
             },
           ]);
 
-          setLayout("home");
+          handleClick(
+            `${minutes}:${seconds}_${timeHours}:${
+              timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
+            } ${ampm}_${d.getTime()}_${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}_${shoe}_${ampm}_${temp}_${weather(
+              conditions
+            )}`
+          );
         }}
       >
         <h2 className="text-center pt-4 text-white text-xl">Submit Run</h2>
