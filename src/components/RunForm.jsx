@@ -114,11 +114,18 @@ const RunForm = ({ setLayout, times, setTimes }) => {
           ]);
 
           handleClick(
-            `${minutes}:${seconds}_${timeHours}:${
-              timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
-            } ${ampm}_${d.getTime()}_${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}_${shoe}_${ampm}_${temp}_${weather(
-              conditions
-            )}`
+            JSON.stringify({
+              displayTime: `${minutes}:${seconds}`,
+              localTime: `${timeHours}:${
+                timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
+              } ${ampm}`,
+              realTime: d.getTime(),
+              date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
+              shoes: shoe,
+              night: ampm,
+              Temperature: temp,
+              Conditions: weather(conditions),
+            })
           );
         }}
       >

@@ -3,7 +3,9 @@ import Run from "./Run";
 import { RunListContext } from "../context/runContext";
 
 const Content = ({ times, setLayout, setCurrentRun }) => {
+  
   const { runList } = useContext(RunListContext);
+  
 
   return (
     <div>
