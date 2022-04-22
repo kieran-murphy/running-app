@@ -119,7 +119,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
               localTime: `${timeHours}:${
                 timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
               } ${ampm}`,
-              realTime: d.getTime(),
+              realTime: d.getTime().toString(),
               date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
               shoes: shoe,
               night: ampm,
