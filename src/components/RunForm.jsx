@@ -3,7 +3,6 @@ import StartButton from "./StartButton";
 import StopButton from "./StopButton";
 import { useStopwatch, useTime } from "react-timer-hook";
 import weather from "../data/weather";
-import { RunListContext } from "../context/runContext";
 const axios = require("axios").default;
 
 // import { weather } from "weather-js";
@@ -25,7 +24,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
   const [totalTime, setTotalTime] = useState(0);
   const [temp, setTemp] = useState(0);
   const [conditions, setConditions] = useState(0);
-  const { addRun } = useContext(RunListContext);
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +40,32 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     fetchData();
   }, []);
 
-  const handleClick = (run) => {
-    addRun(run);
+  // const handleClick = (run) => {
+  //   // addRun(run);
+  //   setLayout("home");
+  // };
+
+  const handleAddRunSubmit=()=>{
+    // e.preventDefault();
     setLayout("home");
-  };
+    const d = new Date();
+    // creating an object
+    let time={
+      displayTime: `${minutes}:${seconds}`,
+      localTime: `${timeHours}:${
+        timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
+      } ${ampm}`,
+      realTime: d.getTime().toString(),
+      date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
+      shoes: shoe,
+      night: ampm,
+      Temperature: temp,
+      Conditions: weather(conditions),
+    }
+    setTimes([...times,time]);
+    
+  }
+
 
   const calculateTime = () => {
     setTotalTime((endTime - startTime) / 1000);
@@ -94,40 +115,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
       </h2>
       <div
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"
-        onClick={() => {
-          const d = new Date();
-
-          setTimes((prevArray) => [
-            ...prevArray,
-            {
-              displayTime: `${minutes}:${seconds}`,
-              localTime: `${timeHours}:${
-                timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
-              } ${ampm}`,
-              realTime: d.getTime(),
-              date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
-              shoes: shoe,
-              night: ampm,
-              Temperature: temp,
-              Conditions: weather(conditions),
-            },
-          ]);
-
-          handleClick(
-            JSON.stringify({
-              displayTime: `${minutes}:${seconds}`,
-              localTime: `${timeHours}:${
-                timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
-              } ${ampm}`,
-              realTime: d.getTime().toString(),
-              date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
-              shoes: shoe,
-              night: ampm,
-              Temperature: temp,
-              Conditions: weather(conditions),
-            })
-          );
-        }}
+        onClick={handleAddRunSubmit}
       >
         <h2 className="text-center pt-4 text-white text-xl">Submit Run</h2>
       </div>

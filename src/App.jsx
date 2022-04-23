@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import AddButton from "./components/AddButton";
@@ -7,49 +7,63 @@ import SortButton from "./components/SortButton";
 import CloseAddButton from "./components/CloseAddButton";
 import RunForm from "./components/RunForm";
 import RunView from "./components/RunView";
-import { RunContextProvider } from "./context/runContext";
+
+const getDatafromLS=()=>{
+  const data = localStorage.getItem('runList');
+  if(data){
+    return JSON.parse(data);
+  }
+  else{
+    return []
+  }
+}
 
 function App() {
   const [layout, setLayout] = useState("home");
   const [sort, setSort] = useState("date");
-  const [times, setTimes] = useState([]);
+  const [times, setTimes] = useState(getDatafromLS());
   const [currentRun, setCurrentRun] = useState({});
+
+  useEffect(()=>{
+    localStorage.setItem('runList',JSON.stringify(times));
+  },[times])
   
 
   switch (layout) {
     case "add":
       return (
         <div>
-          <RunContextProvider>
+          
             <Navbar />
             <CloseAddButton setLayout={setLayout} />
             <RunForm setLayout={setLayout} setTimes={setTimes} times={times} />
-          </RunContextProvider>
+          
         </div>
       );
     case "view":
       return (
         <div>
-          <RunContextProvider>
+          
             <Navbar />
             <CloseAddButton setLayout={setLayout} />
             <RunView currentRun={currentRun} />
-          </RunContextProvider>
+          
         </div>
       );
     default:
       return (
         <div>
-          <RunContextProvider>
+          
             <Navbar />
             <AddButton setLayout={setLayout} />
             <SortButton sort={sort} setSort={setSort} />
             <Content
               times={times}
+              setTimes={setTimes}
               setLayout={setLayout}
               setCurrentRun={setCurrentRun}
             />
-          </RunContextProvider>
+        
         </div>
       );
   }
