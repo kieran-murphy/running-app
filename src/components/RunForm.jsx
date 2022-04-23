@@ -40,11 +40,6 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     fetchData();
   }, []);
 
-  // const handleClick = (run) => {
-  //   // addRun(run);
-  //   setLayout("home");
-  // };
-
   const handleAddRunSubmit=()=>{
     // e.preventDefault();
     setLayout("home");
@@ -52,10 +47,11 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     // creating an object
     let time={
       displayTime: `${minutes}:${seconds}`,
+      totalSeconds: seconds + (minutes * 60),
       localTime: `${timeHours}:${
         timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
       } ${ampm}`,
-      realTime: d.getTime().toString(),
+      realTime: d.getTime(),
       date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
       shoes: shoe,
       night: ampm,
