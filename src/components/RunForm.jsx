@@ -3,7 +3,11 @@ import StartButton from "./StartButton";
 import StopButton from "./StopButton";
 import { useStopwatch, useTime } from "react-timer-hook";
 import weather from "../data/weather";
+import { motion } from "framer-motion";
+
+
 const axios = require("axios").default;
+
 
 // import { weather } from "weather-js";
 
@@ -109,12 +113,13 @@ const RunForm = ({ setLayout, times, setTimes }) => {
       <h2 className="text-xl text-center mt-10">
         {minutes}:{seconds}
       </h2>
-      <div
+      <motion.div
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"
         onClick={handleAddRunSubmit}
+        whileTap={{ scale: 0.9 }}
       >
         <h2 className="text-center pt-4 text-white text-xl">Submit Run</h2>
-      </div>
+      </motion.div>
     </div>
   );
 };
