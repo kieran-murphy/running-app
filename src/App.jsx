@@ -6,6 +6,7 @@ import AddButton from "./components/AddButton";
 
 import SortButton from "./components/SortButton";
 import CloseAddButton from "./components/CloseAddButton";
+import DeleteButton from "./components/DeleteButton";
 import RunForm from "./components/RunForm";
 import RunView from "./components/RunView";
 import _, { map } from 'underscore';
@@ -39,6 +40,13 @@ function App() {
     }
   }, [sort])
 
+  const deleteRun=(realTime)=>{
+    const filteredTimes=times.filter((element,index)=>{
+      return element.realTime !== realTime
+    })
+    setTimes(filteredTimes);
+  }
+
   switch (layout) {
     case "add":
       return (
@@ -54,6 +62,7 @@ function App() {
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
           <RunView currentRun={currentRun} />
+          <DeleteButton setLayout={setLayout} deleteRun={deleteRun} currentRun={currentRun} />
         </div>
       );
     default:
