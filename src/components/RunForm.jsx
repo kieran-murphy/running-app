@@ -50,13 +50,13 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     const d = new Date();
     // creating an object
     let time={
-      displayTime: `${minutes}:${seconds}`,
+      displayTime: `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`,
       totalSeconds: seconds + (minutes * 60),
       localTime: `${timeHours}:${
         timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
       } ${ampm}`,
       realTime: d.getTime(),
-      date: `${d.getUTCDate()}/${d.getUTCMonth()}/${d.getUTCFullYear()}`,
+      date: `${d.getUTCDate()}/0${d.getUTCMonth() + 1}/${d.getUTCFullYear()}`,
       shoes: shoe,
       night: ampm,
       Temperature: temp,

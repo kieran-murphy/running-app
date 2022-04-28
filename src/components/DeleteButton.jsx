@@ -9,7 +9,7 @@ const DeleteButton = ({ setLayout, deleteRun, currentRun }) => {
         setLayout("home");
       }}
 
-      className="bg-red-500 mx-10 mt-10 h-16 drop-shadow-xl rounded-xl"
+      className="bg-red-500 mx-10 my-10 h-16 drop-shadow-xl rounded-xl"
       whileTap={{ scale: 0.9 }}
     >
       <h2 className="text-center pt-4 text-white text-xl">Delete 🗑️</h2>
