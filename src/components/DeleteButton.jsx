@@ -5,8 +5,8 @@ const DeleteButton = ({ setLayout, deleteRun, currentRun }) => {
   return (
     <motion.div
       onClick={() => {
-        deleteRun(currentRun.realTime)
-        setLayout("home");
+        //deleteRun(currentRun.realTime)
+        setLayout("confirm");
       }}
 
       className="bg-red-500 mx-10 my-10 h-16 drop-shadow-xl rounded-xl"

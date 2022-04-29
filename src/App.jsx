@@ -9,7 +9,9 @@ import CloseAddButton from "./components/CloseAddButton";
 import DeleteButton from "./components/DeleteButton";
 import RunForm from "./components/RunForm";
 import RunView from "./components/RunView";
+import Settings from "./components/Settings";
 import _, { map } from 'underscore';
+import DeleteConfirm from "./components/DeleteConfirm";
 
 const getDatafromLS = () => {
   const data = localStorage.getItem("runList");
@@ -65,11 +67,30 @@ function App() {
           <DeleteButton setLayout={setLayout} deleteRun={deleteRun} currentRun={currentRun} />
         </div>
       );
+    case "confirm":
+      return (
+        <div>
+          <Navbar />
+          <CloseAddButton setLayout={setLayout} />
+          <DeleteConfirm deleteRun={deleteRun} currentRun={currentRun} setLayout={setLayout}/>
+        </div>
+      );
+
+    case "settings":
+      return (
+        <div>
+          <Navbar />
+          <CloseAddButton setLayout={setLayout} />
+          
+        </div>
+      );
+
     default:
       return (
         <div>
           <Navbar />
           <AddButton setLayout={setLayout} />
+          <Settings setLayout={setLayout} />
           <SortButton sort={sort} setSort={setSort} />
           <Content
             times={times}
