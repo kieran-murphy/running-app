@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import _, { map } from 'underscore';
+import _, { map } from "underscore";
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import AddButton from "./components/AddButton";
@@ -14,7 +14,6 @@ import ShoesButton from "./components/ShoesButton";
 import ShoesList from "./components/ShoesList";
 import ShoeForm from "./components/ShoeForm";
 
-
 const getDatafromLS = () => {
   const data = localStorage.getItem("runList");
   if (data) {
@@ -24,33 +23,53 @@ const getDatafromLS = () => {
   }
 };
 
+const getShoeDatafromLS = () => {
+  const shoedata = localStorage.getItem("shoes");
+  if (shoedata) {
+    return shoedata.split(",");
+  } else {
+    return ["Nike Pegasus 36", "Adidas Ultraboost"];
+  }
+};
+
 function App() {
   const [layout, setLayout] = useState("home");
   const [sort, setSort] = useState("date");
   const [times, setTimes] = useState(getDatafromLS());
   const [currentRun, setCurrentRun] = useState({});
-  const [shoes, setShoes] = useState(['Nike Pegasus 36', 'Nike React', 'Adidas Ultraboost']);
+  const [shoes, setShoes] = useState(getShoeDatafromLS());
 
   useEffect(() => {
     localStorage.setItem("runList", JSON.stringify(times));
   }, [times]);
 
   useEffect(() => {
-    if(sort === "date"){
-      var sortedObjs = _.sortBy( times, 'realTime' );
+    localStorage.setItem("shoes", shoes);
+  }, [shoes]);
+
+  useEffect(() => {
+    if (sort === "date") {
+      var sortedObjs = _.sortBy(times, "realTime");
       setTimes(sortedObjs.reverse());
     } else {
-      var sortedObjs = _.sortBy( times, 'totalSeconds' );
+      var sortedObjs = _.sortBy(times, "totalSeconds");
       setTimes(sortedObjs);
     }
-  }, [sort])
+  }, [sort]);
 
-  const deleteRun=(realTime)=>{
-    const filteredTimes=times.filter((element,index)=>{
-      return element.realTime !== realTime
-    })
+  const deleteRun = (realTime) => {
+    const filteredTimes = times.filter((element, index) => {
+      return element.realTime !== realTime;
+    });
     setTimes(filteredTimes);
-  }
+  };
+
+  const deleteShoe = (shoe) => {
+    const filteredShoes = shoes.filter((element, index) => {
+      return element !== shoe;
+    });
+    setShoes(filteredShoes);
+  };
 
   switch (layout) {
     case "add":
@@ -58,7 +77,12 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <RunForm setLayout={setLayout} setTimes={setTimes} times={times} shoes={shoes} />
+          <RunForm
+            setLayout={setLayout}
+            setTimes={setTimes}
+            times={times}
+            shoes={shoes}
+          />
         </div>
       );
     case "view":
@@ -67,7 +91,11 @@ function App() {
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
           <RunView currentRun={currentRun} />
-          <DeleteButton setLayout={setLayout} deleteRun={deleteRun} currentRun={currentRun} />
+          <DeleteButton
+            setLayout={setLayout}
+            deleteRun={deleteRun}
+            currentRun={currentRun}
+          />
         </div>
       );
     case "confirm":
@@ -75,7 +103,11 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <DeleteConfirm deleteRun={deleteRun} currentRun={currentRun} setLayout={setLayout}/>
+          <DeleteConfirm
+            deleteRun={deleteRun}
+            currentRun={currentRun}
+            setLayout={setLayout}
+          />
         </div>
       );
 
@@ -84,19 +116,18 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <ShoesButton setLayout={setLayout}/>
+          <ShoesButton setLayout={setLayout} />
         </div>
       );
     case "shoeSettings":
-        return (
-          <div>
-            <Navbar />
-            <CloseAddButton setLayout={setLayout} />
-            <ShoeForm setShoes={setShoes} shoes={shoes}/>
-            <ShoesList shoes={shoes}/>
-          </div>
-        );
-    
+      return (
+        <div>
+          <Navbar />
+          <CloseAddButton setLayout={setLayout} />
+          <ShoeForm setShoes={setShoes} shoes={shoes} />
+          <ShoesList shoes={shoes} deleteShoe={deleteShoe} />
+        </div>
+      );
 
     default:
       return (
