@@ -11,8 +11,8 @@ const axios = require("axios").default;
 
 // import { weather } from "weather-js";
 
-const RunForm = ({ setLayout, times, setTimes }) => {
-  const { seconds, minutes, isRunning, start, pause } = useStopwatch({
+const RunForm = ({ setLayout, times, setTimes, shoes }) => {
+  const { seconds, minutes, hours, isRunning, start, pause } = useStopwatch({
     autoStart: false,
   });
 
@@ -44,8 +44,7 @@ const RunForm = ({ setLayout, times, setTimes }) => {
     fetchData();
   }, []);
 
-  const handleAddRunSubmit=()=>{
-    // e.preventDefault();
+  const handleAddRunSubmit=()=>{ 
     setLayout("home");
     const d = new Date();
     // creating an object
@@ -106,12 +105,15 @@ const RunForm = ({ setLayout, times, setTimes }) => {
           form="carform"
           onChange={handleInputChange}
         >
-          <option value="Nike Pegasus 36">Nike Pegasus 36</option>
-          <option value="Adidas Ultraboost">Adidas Ultraboost</option>
+          {/* <option value="Nike Pegasus 36">Nike Pegasus 36</option>
+          <option value="Adidas Ultraboost">Adidas Ultraboost</option> */}
+          {shoes.map((el) => (
+          <option key={el} value={el}>{el}</option>
+        ))}
         </select>
       </div>
-      <h2 className="text-xl text-center mt-10">
-        {minutes}:{seconds}
+      <h2 className="text-2xl text-center mt-10">
+        {hours}:{minutes}:{seconds}
       </h2>
       <motion.div
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"

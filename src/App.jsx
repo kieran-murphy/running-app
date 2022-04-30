@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import AddButton from "./components/AddButton";
-
-
 import SortButton from "./components/SortButton";
 import CloseAddButton from "./components/CloseAddButton";
 import DeleteButton from "./components/DeleteButton";
@@ -12,6 +10,11 @@ import RunView from "./components/RunView";
 import Settings from "./components/Settings";
 import _, { map } from 'underscore';
 import DeleteConfirm from "./components/DeleteConfirm";
+import ShoesButton from "./components/ShoesButton";
+import ShoesList from "./components/ShoesList";
+import ShoeForm from "./components/ShoeForm";
+import AddShoe from "./components/AddShoe";
+
 
 const getDatafromLS = () => {
   const data = localStorage.getItem("runList");
@@ -27,6 +30,7 @@ function App() {
   const [sort, setSort] = useState("date");
   const [times, setTimes] = useState(getDatafromLS());
   const [currentRun, setCurrentRun] = useState({});
+  const [shoes, setShoes] = useState(['Nike Pegasus 36', 'Nike React', 'Adidas Ultraboost']);
 
   useEffect(() => {
     localStorage.setItem("runList", JSON.stringify(times));
@@ -55,7 +59,7 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          <RunForm setLayout={setLayout} setTimes={setTimes} times={times} />
+          <RunForm setLayout={setLayout} setTimes={setTimes} times={times} shoes={shoes} />
         </div>
       );
     case "view":
@@ -81,9 +85,21 @@ function App() {
         <div>
           <Navbar />
           <CloseAddButton setLayout={setLayout} />
-          
+          <ShoesButton setLayout={setLayout}/>
         </div>
       );
+    case "shoeSettings":
+        return (
+          <div>
+            <Navbar />
+            <CloseAddButton setLayout={setLayout} />
+            <ShoeForm setShoes={setShoes} shoes={shoes}/>
+            <AddShoe setShoes={setShoes}/>
+            <ShoesList shoes={shoes}/>
+            
+          </div>
+        );
+    
 
     default:
       return (
