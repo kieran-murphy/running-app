@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import _, { map } from 'underscore';
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import AddButton from "./components/AddButton";
@@ -8,12 +9,10 @@ import DeleteButton from "./components/DeleteButton";
 import RunForm from "./components/RunForm";
 import RunView from "./components/RunView";
 import Settings from "./components/Settings";
-import _, { map } from 'underscore';
 import DeleteConfirm from "./components/DeleteConfirm";
 import ShoesButton from "./components/ShoesButton";
 import ShoesList from "./components/ShoesList";
 import ShoeForm from "./components/ShoeForm";
-import AddShoe from "./components/AddShoe";
 
 
 const getDatafromLS = () => {
@@ -94,9 +93,7 @@ function App() {
             <Navbar />
             <CloseAddButton setLayout={setLayout} />
             <ShoeForm setShoes={setShoes} shoes={shoes}/>
-            <AddShoe setShoes={setShoes}/>
             <ShoesList shoes={shoes}/>
-            
           </div>
         );
     

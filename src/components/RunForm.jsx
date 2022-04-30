@@ -49,8 +49,8 @@ const RunForm = ({ setLayout, times, setTimes, shoes }) => {
     const d = new Date();
     // creating an object
     let time={
-      displayTime: `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`,
-      totalSeconds: seconds + (minutes * 60),
+      displayTime: `${hours ? `${hours}:` : ""}${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`,
+      totalSeconds: seconds + (minutes * 60) + (hours * 60 * 60),
       localTime: `${timeHours}:${
         timeMinutes > 9 ? timeMinutes : `0${timeMinutes}`
       } ${ampm}`,
@@ -98,22 +98,20 @@ const RunForm = ({ setLayout, times, setTimes, shoes }) => {
       <div className="bg-slate-300 mx-10 mt-10 h-28 drop-shadow-xl rounded-xl flex flex-col">
         <h2 className="self-center pt-4 py-3 text-white text-xl">Shoes 👟</h2>
         <select
-          className="self-center"
+          className="self-center rounded-md"
           name="shoes"
           id="shoes"
           value={shoe}
           form="carform"
           onChange={handleInputChange}
         >
-          {/* <option value="Nike Pegasus 36">Nike Pegasus 36</option>
-          <option value="Adidas Ultraboost">Adidas Ultraboost</option> */}
           {shoes.map((el) => (
           <option key={el} value={el}>{el}</option>
         ))}
         </select>
       </div>
       <h2 className="text-2xl text-center mt-10">
-        {hours}:{minutes}:{seconds}
+        {hours ? `${hours}:` : ""}{minutes}:{seconds}
       </h2>
       <motion.div
         className="bg-blue-400 mx-10 mt-40 h-16 drop-shadow-xl rounded-xl"
